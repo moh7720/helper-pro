@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HELP-PRO</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  color: white;
+  background: linear-gradient(-45deg, #0f172a, #020617, #1e293b, #020617);
+  background-size: 400% 400%;
+  animation: bg 10s ease infinite;
+}
+
+@keyframes bg {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* ===== Navbar ===== */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 60px;
+}
+
+.logo {
+  font-size: 24px;
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.nav-buttons button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.login {
+  background: transparent;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+}
+
+.signup {
+  background: #38bdf8;
+  color: black;
+}
+
+/* ===== Hero ===== */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+.hero h1 {
+  font-size: 60px;
+}
+
+.hero span {
+  color: #38bdf8;
+}
+
+.hero p {
+  margin-top: 20px;
+  color: #cbd5f5;
+}
+
+.btn {
+  margin-top: 30px;
+  padding: 15px 40px;
+  background: #38bdf8;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* ===== Sections ===== */
+.section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.card {
+  width: 260px;
+  padding: 25px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* ===== Stats ===== */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.stat {
+  font-size: 28px;
+}
+
+/* ===== Steps ===== */
+.steps {
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
+  margin-top: 40px;
+}
+
+.step {
+  margin-bottom: 20px;
+}
+
+/* ===== Testimonials ===== */
+.testimonial {
+  max-width: 500px;
+  margin: 20px auto;
+  opacity: 0.8;
+}
+
+/* ===== Scroll Animation ===== */
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.6s;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">HELP-PRO</div>
+  <div class="nav-buttons">
+  <button class="login" onclick="goToLogin()">Login</button>
+  <button class="signup" onclick="goToRegister()">Sign Up</button>
+</div>
+</nav>
+
+<section class="hero">
+  <h1>Build Projects <span>Faster</span></h1>
+  <p>Stop wasting time on setup. Start building real things.</p>
+  <button class="btn" onclick="goToRegister()">Get Started 🚀</button>
+</section>
+
+<section class="section hidden">
+  <h2>Features</h2>
+  <div class="cards">
+    <div class="card">⚡ Instant Setup</div>
+    <div class="card">🧠 Smart Structure</div>
+    <div class="card">🔧 Flexible Tools</div>
+  </div>
+</section>
+
+<section class="section hidden">
+  <h2>Trusted by Developers</h2>
+  <div class="stats">
+    <div class="stat">+10K Users</div>
+    <div class="stat">+50K Projects</div>
+    <div class="stat">99% Satisfaction</div>
+  </div>
+</section>
+
+<section class="section hidden">
+  <h2>How it works</h2>
+  <div class="steps">
+    <div class="step">1. Choose project type</div>
+    <div class="step">2. Customize structure</div>
+    <div class="step">3. Download & start coding</div>
+  </div>
+</section>
+
+<section class="section hidden">
+  <h2>What Developers Say</h2>
+  <div class="testimonial">"This saved me hours every week!"</div>
+  <div class="testimonial">"Finally a tool that makes sense."</div>
+</section>
+
+<section class="section hidden">
+  <h2>Start Now</h2>
+  <button class="btn">Launch Project</button>
+</section>
+
+<footer>
+  © 2026 HELP-PRO
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+});
+
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+//login and signup functions
+function goToLogin() {
+  window.location.href = "login.html";
+}
+
+function goToRegister() {
+  window.location.href = "register.html";
+}
+</script>
+
+</body>
+</html>
