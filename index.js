@@ -80,7 +80,7 @@ app.post("/login", async (req, res) => {
         
         const user = await User.findOne({ email });
         if (!user) {
-            return res.sendFile(__dirname + "/views/loginError.htmll");
+            return res.sendFile(__dirname + "/views/loginError.html");
         }
 
         
