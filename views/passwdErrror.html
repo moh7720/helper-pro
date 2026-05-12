@@ -1,79 +1,119 @@
 <div class="login-error-card">
-    <div class="icon">Error!</div>
 
-    <h2>login failed!</h2>
+    <div class="error-icon">
+        ✕
+    </div>
+
+    <h2>Login Failed</h2>
 
     <p>
-        password invalid
+        The password you entered is incorrect.
+        Please try again.
     </p>
 
-    <a href="/login.html" class="register-btn">
-        try again
+    <a href="/login.html" class="retry-btn">
+        Try Again
     </a>
+
 </div>
 
 <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-    background-color: #d8d8da;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f4f6f9;
+    font-family:Arial, sans-serif;
 }
 
-.login-error-card {
-    width: 100%;
-    max-width: 420px;
-    margin: 40px auto;
-    padding: 28px;
-    border-radius: 20px;
-    background: #a4a4a4;
-    border: 1px solid #ffcccc;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    animation: fadeIn 0.4s ease;
+.login-error-card{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:40px 30px;
+    border-radius:22px;
+    text-align:center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+    animation:fadeIn .4s ease;
 }
 
-.login-error-card .icon {
-    font-size: 55px;
-    margin-bottom: 12px;
+.error-icon{
+    width:80px;
+    height:80px;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    background:#ffe5e5;
+    color:#e53935;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:38px;
+    font-weight:bold;
 }
 
-.login-error-card h2 {
-    color: #cd6a6a;
-    margin-bottom: 12px;
-    font-size: 26px;
+.login-error-card h2{
+    font-size:30px;
+    color:#222;
+    margin-bottom:14px;
 }
 
-.login-error-card p {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 22px;
-    font-size: 16px;
+.login-error-card p{
+    color:#666;
+    line-height:1.7;
+    font-size:16px;
+    margin-bottom:28px;
 }
 
-.register-btn {
-    display: inline-block;
-    text-decoration: none;
-    background: #28697c;
-    color: white;
-    padding: 12px 22px;
-    border-radius: 12px;
-    font-weight: bold;
-    transition: 0.3s;
+.retry-btn{
+    display:inline-block;
+
+    padding:14px 28px;
+
+    background:#e53935;
+    color:white;
+
+    text-decoration:none;
+    border-radius:14px;
+
+    font-weight:bold;
+
+    transition:.25s;
 }
 
-.register-btn:hover {
-    background: #b71c1c;
-    transform: translateY(-2px);
+.retry-btn:hover{
+    background:#c62828;
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(229,57,53,.3);
 }
 
-/* @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px);
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
-} */
+
+}
+
 </style>
