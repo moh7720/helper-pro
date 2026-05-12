@@ -55,6 +55,8 @@ app.get("/login.html", redirectIfLoggedIn, (req, res) => {
 app.post("/register", async (req, res) => {
     try {
         const { username, email, password } = req.body;
+        const isExist = await User.findOne({email});
+            if (isExist){return res.sendFile(__dirname + "/views/regesterError.html");}
         const hashed = await bcrypt.hash(password, 10);
 
         const newUser = new User({
@@ -78,13 +80,13 @@ app.post("/login", async (req, res) => {
         
         const user = await User.findOne({ email });
         if (!user) {
-            return res.send("Invalid email or password");
+            return res.sendFile(__dirname + "/views/loginError.htmll");
         }
 
         
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.send("Invalid email or password");
+            return res.sendFile(__dirname + "/views/passwdErrror.html");
         }
 
         
