@@ -4,7 +4,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const User = require("./models/user.js");
 const bcrypt = require("bcrypt");
-app.use(express.static("views"));
+app.use(express.static("/views/"));
 
 
 app.use(require("express-session")({
