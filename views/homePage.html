@@ -19,6 +19,10 @@ body {
   animation: bg 10s ease infinite;
 }
 
+img{
+  border-radius: 50%;
+}
+
 @keyframes bg {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
@@ -65,10 +69,6 @@ nav {
 
 .hero h1 {
   font-size: 60px;
-}
-
-.hero span {
-  color: #38bdf8;
 }
 
 .hero p {
@@ -180,9 +180,10 @@ footer {
 </nav>
 
 <section class="hero">
-  <h1>Build Projects <span>Faster</span></h1>
+  <img src="/views/msenn2.jpeg" width="100px" height="100px">
+  <h1><span class="b1">Build</span> <span class="b2">Projects</span> <span class="b3">Faster</span></h1>
   <p>Stop wasting time on setup. Start building real things.</p>
-  <button class="btn" onclick="goToRegister()">Get Started 🚀</button>
+  <button class="btn" onclick="goToRegister()">Get Started </button>
 </section>
 
 <section class="section hidden">
@@ -247,6 +248,44 @@ function goToRegister() {
   window.location.href = "register.html";
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
+  gsap.from("h1", {
+    opacity: 0,
+    y: -100,
+    duration: 4,
+  });
+
+  const tl = gsap.timeline({repeat:-1});
+
+  tl.to(".b1", {
+    opacity:0.8,
+    duration: 2,
+    color: "DeepSkyBlue",
+    yoyo: true,
+  })
+
+  tl.to(".b2", {
+    duration: 2,
+    opacity:0.8,
+    color: "lime",
+  })
+
+  tl.to(".b3", {
+    opacity:0.8,
+    duration: 3,
+    color: "red",
+  });
+
+  gsap.to("img",{
+    rotate:180,
+    duration:2,
+    repeat:-1,
+  });
+
+});
+</script>
 </body>
 </html>

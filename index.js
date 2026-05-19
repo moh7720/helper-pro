@@ -67,7 +67,7 @@ app.post("/register", async (req, res) => {
 
         await newUser.save();
 
-        res.send("User registered successfully");
+        res.sendFile(__dirname + "/views/succesR.html");
     } catch (err) {
         res.send("Error: " + err.message);
     }
@@ -83,7 +83,6 @@ app.post("/login", async (req, res) => {
             return res.sendFile(__dirname + "/views/loginError.html");
         }
 
-        
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.sendFile(__dirname + "/views/passwdErrror.html");
