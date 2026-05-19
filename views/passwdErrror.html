@@ -1,0 +1,79 @@
+<div class="login-error-card">
+    <div class="icon">Error!</div>
+
+    <h2>login failed!</h2>
+
+    <p>
+        password invalid
+    </p>
+
+    <a href="/login.html" class="register-btn">
+        try again
+    </a>
+</div>
+
+<style>
+body{
+    background-color: #373737;
+}
+
+.login-error-card {
+    width: 100%;
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 28px;
+    border-radius: 20px;
+    background: #a4a4a4;
+    border: 1px solid #ffcccc;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    animation: fadeIn 0.4s ease;
+}
+
+.login-error-card .icon {
+    font-size: 55px;
+    margin-bottom: 12px;
+}
+
+.login-error-card h2 {
+    color: #d62828;
+    margin-bottom: 12px;
+    font-size: 26px;
+}
+
+.login-error-card p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 22px;
+    font-size: 16px;
+}
+
+.register-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #d62828;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background: #b71c1c;
+    transform: translateY(-2px);
+}
+
+/* @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
+</style>
