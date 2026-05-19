@@ -4,7 +4,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const User = require("./models/user.js");
 const bcrypt = require("bcrypt");
-app.use(express.static("/views/"));
+app.use(express.static("/views"));
 
 
 app.use(require("express-session")({
@@ -40,6 +40,10 @@ function redirectIfLoggedIn(req, res, next) {
     }
     next();
 }
+
+app.get("/image", (req, res) => {
+  res.sendFile(__dirname + "/views/msenn2.jpeg");
+});
 
 app.get("/",(req,res)=>{
     res.sendFile(__dirname + "/views/homePage.html");
