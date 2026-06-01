@@ -51,6 +51,8 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap; /* للسماح بالعناصر بالنزول بسلاسة على الهواتف */
+            gap: 15px;
         }
 
         .logo-link {
@@ -65,18 +67,26 @@
         .logo span.blue { color: #38bdf8; }
         .logo span.green { color: #4ade80; }
 
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         nav a {
             color: var(--text-muted);
             text-decoration: none;
             margin: 0 15px;
             font-size: 15px;
+            white-space: nowrap;
         }
         nav a:hover { color: #3b82f6; }
 
         .right-menu {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .api-status {
@@ -90,6 +100,7 @@
             padding: 4px 10px;
             border-radius: 20px;
             border: 1px solid rgba(74, 222, 128, 0.2);
+            white-space: nowrap;
         }
         .api-dot {
             width: 8px;
@@ -115,6 +126,10 @@
             color: var(--text-main);
         }
 
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
         .auth-buttons .btn-login {
             color: #3b82f6;
             text-decoration: none;
@@ -136,12 +151,12 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 100px 20px 80px 20px;
+            padding: 80px 24px 60px 24px;
             background: var(--hero-glow);
         }
 
         .spinning-gear {
-            font-size: 55px;
+            font-size: 50px;
             color: #38bdf8;
             margin-bottom: 25px;
             animation: spin 4s linear infinite;
@@ -151,7 +166,7 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
         .hero h1 {
-            font-size: 46px;
+            font-size: 42px;
             font-weight: 700;
             line-height: 1.3;
             margin-bottom: 25px;
@@ -162,7 +177,7 @@
         .hero h1 span.pink { color: #f472b6; }
 
         .hero p {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--text-muted);
             max-width: 800px;
             margin-bottom: 35px;
@@ -172,16 +187,23 @@
         .hero-buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn-primary {
             background-color: #3b82f6;
             color: white;
-            text-decoration: none;
-            padding: 12px 35px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
             box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
         }
 
@@ -189,42 +211,38 @@
             background-color: transparent;
             color: #3b82f6;
             border: 2px solid #3b82f6;
-            text-decoration: none;
-            padding: 12px 35px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
         }
 
         .section-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            margin-top: 80px;
-            margin-bottom: 40px;
+            margin-top: 60px;
+            margin-bottom: 35px;
+            padding: 0 20px;
         }
 
         .features { padding: 40px 8%; }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 25px;
         }
 
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
         }
 
-        .card h3 { font-size: 20px; margin-bottom: 15px; }
+        .card h3 { font-size: 18px; margin-bottom: 12px; }
         .card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 
         .stats {
             background-color: var(--card-bg);
-            padding: 50px 8%;
+            padding: 40px 8%;
             text-align: center;
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
@@ -234,32 +252,39 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 25px;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        .stat-item h2 { font-size: 42px; color: #3b82f6; margin-bottom: 10px; }
-        .stat-item p { color: var(--text-muted); }
+        .stat-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        .stat-item h2 { font-size: 36px; color: #3b82f6; margin-bottom: 8px; }
+        .stat-item p { color: var(--text-muted); font-size: 15px; }
 
         .faq-section {
-            padding: 60px 20%;
+            padding: 40px 8%;
+            max-width: 800px;
+            margin: 0 auto;
         }
         .faq-item {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             overflow: hidden;
         }
         .faq-question {
-            padding: 20px;
+            padding: 16px 20px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            font-size: 15px;
         }
         .faq-answer {
             max-height: 0;
@@ -271,27 +296,27 @@
             transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
         }
         .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 20px 20px 20px;
+            max-height: 250px;
+            padding: 0 20px 16px 20px;
         }
 
-        .team { padding: 60px 8%; }
+        .team { padding: 40px 8%; }
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .team-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 25px 20px;
+            padding: 20px 15px;
             border-radius: 12px;
             text-align: center;
         }
 
         .team-card .role {
-            font-size: 12px;
+            font-size: 11px;
             color: #3b82f6;
             font-weight: 700;
             background: rgba(59, 130, 246, 0.1);
@@ -309,27 +334,75 @@
             display: flex; align-items: center; justify-content: center;
             z-index: 2000; opacity: 0; pointer-events: none;
             transition: opacity 0.3s ease;
+            padding: 20px;
         }
         .modal.active { opacity: 1; pointer-events: auto; }
         .modal-content {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 40px; border-radius: 16px; max-width: 500px;
-            text-align: center; position: relative;
+            padding: 30px; border-radius: 16px; max-width: 450px;
+            width: 100%; text-align: center; position: relative;
         }
         .close-modal {
-            position: absolute; top: 15px; right: 20px;
+            position: absolute; top: 12px; right: 18px;
             font-size: 24px; cursor: pointer; color: var(--text-muted);
         }
-        .modal-content h3 { margin-bottom: 15px; color: #3b82f6; }
-        .modal-content p { color: var(--text-muted); line-height: 1.6; }
+        .modal-content h3 { margin-bottom: 15px; color: #3b82f6; font-size: 20px; }
+        .modal-content p { color: var(--text-muted); line-height: 1.6; font-size: 14px; }
 
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13px;
             border-top: 1px solid var(--border-color);
+        }
+
+       Media Queries 
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+                text-align: center;
+            }
+            nav {
+                margin: 5px 0;
+            }
+            nav a {
+                margin: 5px 10px;
+                font-size: 14px;
+            }
+            .right-menu {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+            .api-status {
+                order: 3; 
+            }
+            .hero {
+                padding: 50px 20px 40px 20px;
+            }
+            .hero h1 {
+                font-size: 28px; 
+            }
+            .hero p {
+                font-size: 15px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%; 
+            }
+            .section-title {
+                font-size: 24px;
+                margin-top: 40px;
+            }
+            .faq-section {
+                padding: 20px 5%;
+            }
         }
     </style>
 </head>
@@ -417,7 +490,7 @@
         <div class="faq-item">
             <div class="faq-question">%70 zaman tasarrufu nasıl sağlanır? <span class="faq-icon">+</span></div>
             <div class="faq-answer">
-                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim ve algoritma kurgulama adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
+                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim ve algoritmo kurgulama adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
             </div>
         </div>
     </section>
