@@ -6,6 +6,7 @@
     <title>Mesajlasma Ekrani</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -126,6 +127,34 @@
             font-size: 13px;
         }
 
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .chart-button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            background: #7c3aed;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .new-chat:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .chart-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         .messages {
             flex: 1;
             overflow-y: auto;
@@ -159,6 +188,51 @@
         .user .bubble {
             background: #2563eb;
             color: white;
+        }
+
+        .flowchart-panel {
+            border-top: 1px solid #243247;
+            background: #0b1220;
+            padding: 18px 24px;
+        }
+
+        .flowchart-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .flowchart-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #e5eefc;
+        }
+
+        .flowchart-header p {
+            margin: 6px 0 0;
+            max-width: 760px;
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .flowchart-canvas {
+            overflow: auto;
+            border: 1px solid #243247;
+            border-radius: 8px;
+            min-height: 220px;
+            padding: 14px;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .flowchart-canvas svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
         }
 
         .composer {
@@ -227,6 +301,11 @@
                 flex-direction: column;
             }
 
+            .topbar-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
             .bubble {
                 max-width: 90%;
             }
@@ -241,6 +320,8 @@
     <div id="root"></div>
 
     <script>
+        mermaid.initialize({ startOnLoad: false, theme: "default" });
+
         const { useEffect, useMemo, useRef, useState } = React;
 
         function createChat(number) {
@@ -257,22 +338,91 @@
         }
 
         function App() {
-            const [chats, setChats] = useState([createChat(1)]);
-            const [activeChatId, setActiveChatId] = useState(chats[0].id);
+            const [chats, setChats] = useState([]);
+            const [activeChatId, setActiveChatId] = useState(null);
             const [input, setInput] = useState("");
             const [isLoading, setIsLoading] = useState(false);
+            const [isLoadingChats, setIsLoadingChats] = useState(true);
+            const [isChartLoading, setIsChartLoading] = useState(false);
             const [error, setError] = useState("");
+            const [flowchart, setFlowchart] = useState(null);
             const messagesRef = useRef(null);
+            const flowchartRef = useRef(null);
 
             const activeChat = useMemo(() => {
-                return chats.find((chat) => chat.id === activeChatId) || chats[0];
+                return chats.find((chat) => chat.id === activeChatId) || chats[0] || {
+                    id: null,
+                    title: "Loading",
+                    messages: []
+                };
             }, [chats, activeChatId]);
+
+            useEffect(() => {
+                let isMounted = true;
+
+                async function loadChats() {
+                    try {
+                        const response = await fetch("/api/chats");
+                        const data = await response.json().catch(() => ({}));
+
+                        if (!response.ok) {
+                            throw new Error(data.error || "Could not load conversations");
+                        }
+
+                        if (isMounted) {
+                            const savedChats = Array.isArray(data.chats) ? data.chats : [];
+                            setChats(savedChats);
+                            setActiveChatId(savedChats[0]?.id || null);
+                        }
+                    } catch (err) {
+                        if (isMounted) {
+                            setError(err.message);
+                        }
+                    } finally {
+                        if (isMounted) {
+                            setIsLoadingChats(false);
+                        }
+                    }
+                }
+
+                loadChats();
+
+                return () => {
+                    isMounted = false;
+                };
+            }, []);
 
             useEffect(() => {
                 if (messagesRef.current) {
                     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
                 }
             }, [activeChat.messages, isLoading]);
+
+            useEffect(() => {
+                if (!flowchart || !flowchartRef.current) return;
+
+                let isMounted = true;
+                const renderId = "flowchart-" + activeChat.id + "-" + Date.now();
+
+                mermaid.render(renderId, flowchart.mermaid)
+                    .then(({ svg }) => {
+                        if (isMounted && flowchartRef.current) {
+                            flowchartRef.current.innerHTML = svg;
+                        }
+                    })
+                    .catch((err) => {
+                        if (isMounted) {
+                            setError("Mermaid chart render failed: " + err.message);
+                            if (flowchartRef.current) {
+                                flowchartRef.current.textContent = flowchart.mermaid;
+                            }
+                        }
+                    });
+
+                return () => {
+                    isMounted = false;
+                };
+            }, [flowchart, activeChat.id]);
 
             function updateActiveChat(messages) {
                 setChats((currentChats) =>
@@ -282,19 +432,50 @@
                 );
             }
 
-            function addChat() {
-                const nextChat = createChat(chats.length + 1);
-                setChats([...chats, nextChat]);
-                setActiveChatId(nextChat.id);
-                setInput("");
+            function updateSavedChat(savedChat) {
+                setChats((currentChats) =>
+                    currentChats.map((chat) =>
+                        chat.id === savedChat.id ? savedChat : chat
+                    )
+                );
+            }
+
+            async function addChat() {
+                if (isLoading || isLoadingChats) return;
+
                 setError("");
+
+                try {
+                    const response = await fetch("/api/chats", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" }
+                    });
+                    const data = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Could not create conversation");
+                    }
+
+                    setChats((currentChats) => [data.chat, ...currentChats]);
+                    setActiveChatId(data.chat.id);
+                    setInput("");
+                    setFlowchart(null);
+                } catch (err) {
+                    setError(err.message);
+                }
+            }
+
+            function selectChat(chatId) {
+                setActiveChatId(chatId);
+                setError("");
+                setFlowchart(null);
             }
 
             async function sendMessage(event) {
                 event.preventDefault();
 
                 const text = input.trim();
-                if (!text || isLoading) return;
+                if (!text || isLoading || isLoadingChats || !activeChat.id) return;
 
                 const userMessage = { role: "user", content: text };
                 const nextMessages = [...activeChat.messages, userMessage];
@@ -317,14 +498,11 @@
                         throw new Error(data.error || "Server error");
                     }
 
-                    if (!data.reply) {
+                    if (!data.reply || !data.chat) {
                         throw new Error("Empty response from Gemini");
                     }
 
-                    updateActiveChat([
-                        ...nextMessages,
-                        { role: "assistant", content: data.reply }
-                    ]);
+                    updateSavedChat(data.chat);
                 } catch (err) {
                     setError(err.message);
                     updateActiveChat([
@@ -336,6 +514,38 @@
                     ]);
                 } finally {
                     setIsLoading(false);
+                }
+            }
+
+            async function generateFlowchart() {
+                if (isLoading || isChartLoading || !activeChat.id || activeChat.messages.length < 2) return;
+
+                setError("");
+                setFlowchart(null);
+                setIsChartLoading(true);
+
+                try {
+                    const response = await fetch("/api/flowchart", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ chatId: activeChat.id, messages: activeChat.messages })
+                    });
+
+                    const data = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Server error");
+                    }
+
+                    if (!data.summary || !data.mermaid) {
+                        throw new Error("Empty chart response from Gemini");
+                    }
+
+                    setFlowchart(data);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setIsChartLoading(false);
                 }
             }
 
@@ -352,16 +562,20 @@
                         React.createElement("h1", null, "HELP-PRO Chat"),
                         React.createElement("p", null, "React ile mesajlasma ekrani")
                     ),
-                    React.createElement("button", { className: "new-chat", onClick: addChat }, "New Chat"),
+                    React.createElement("button", {
+                        className: "new-chat",
+                        onClick: addChat,
+                        disabled: isLoading || isLoadingChats
+                    }, "New Chat"),
                     React.createElement("div", { className: "chat-tabs" },
                         chats.map((chat) =>
                             React.createElement("button", {
                                 key: chat.id,
                                 className: "chat-tab" + (chat.id === activeChat.id ? " active" : ""),
-                                onClick: () => setActiveChatId(chat.id)
+                                onClick: () => selectChat(chat.id)
                             },
                                 React.createElement("strong", null, chat.title),
-                                React.createElement("span", null, chat.messages[chat.messages.length - 1].content)
+                                React.createElement("span", null, chat.messages[chat.messages.length - 1]?.content || "No messages yet")
                             )
                         )
                     )
@@ -371,10 +585,18 @@
                         React.createElement("div", null,
                             React.createElement("h2", null, activeChat.title),
                             React.createElement("div", { className: "status" },
-                                isLoading ? "Gemini cevap yaziyor..." : "Gemini API baglandi"
+                                isLoadingChats ? "Conversations loading..." : isLoading ? "Gemini cevap yaziyor..." : isChartLoading ? "Chart hazirlaniyor..." : "Gemini API baglandi"
                             )
                         ),
-                        error ? React.createElement("div", { className: "status" }, error) : null
+                        React.createElement("div", { className: "topbar-actions" },
+                            React.createElement("button", {
+                                className: "chart-button",
+                                type: "button",
+                                onClick: generateFlowchart,
+                                disabled: isLoadingChats || isLoading || isChartLoading || !activeChat.id || activeChat.messages.length < 2
+                            }, isChartLoading ? "Generating" : "Generate Chart"),
+                            error ? React.createElement("div", { className: "status" }, error) : null
+                        )
                     ),
                     React.createElement("div", { className: "messages", ref: messagesRef },
                         activeChat.messages.map((message, index) =>
@@ -389,15 +611,24 @@
                             React.createElement("div", { className: "bubble" }, "Typing...")
                         ) : null
                     ),
+                    flowchart ? React.createElement("section", { className: "flowchart-panel" },
+                        React.createElement("div", { className: "flowchart-header" },
+                            React.createElement("div", null,
+                                React.createElement("h3", null, "Project Flowchart"),
+                                React.createElement("p", null, flowchart.summary)
+                            )
+                        ),
+                        React.createElement("div", { className: "flowchart-canvas", ref: flowchartRef })
+                    ) : null,
                     React.createElement("form", { className: "composer", onSubmit: sendMessage },
                         React.createElement("textarea", {
                             value: input,
                             onChange: (event) => setInput(event.target.value),
                             onKeyDown: handleKeyDown,
                             placeholder: "Mesajinizi yazin...",
-                            disabled: isLoading
+                            disabled: isLoading || isLoadingChats
                         }),
-                        React.createElement("button", { type: "submit", disabled: isLoading || input.trim() === "" },
+                        React.createElement("button", { type: "submit", disabled: isLoading || isLoadingChats || !activeChat.id || input.trim() === "" },
                             isLoading ? "Sending" : "Send"
                         )
                     )
