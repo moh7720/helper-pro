@@ -153,7 +153,6 @@
             border: none;
         }
 
-        /* زر الهامبرغر للهواتف */
         .menu-toggle-btn {
             display: none;
             flex-direction: column;
@@ -172,7 +171,6 @@
             transition: all 0.3s ease;
         }
 
-        /* ===== Hero Section ===== */
         .hero {
             display: flex;
             flex-direction: column;
@@ -386,17 +384,16 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* ===== Responsive Design (تعديلات الهواتف الذكية المتقدمة) ===== */
+        /* ===== Responsive Design ===== */
         @media (max-width: 1024px) {
             header { padding: 15px 4%; }
         }
 
         @media (max-width: 768px) {
             .menu-toggle-btn {
-                display: flex; /* إظهار زر الهامبرغر */
+                display: flex;
             }
 
-            /* تحويل القائمة العادية إلى قائمة منسدلة تغطي الشاشة بالكامل عند الفتح */
             nav {
                 position: fixed;
                 top: 0;
@@ -415,7 +412,7 @@
             }
 
             nav.open {
-                right: 0; /* فتح القائمة */
+                right: 0;
             }
 
             nav a {
@@ -430,7 +427,6 @@
                 gap: 10px;
             }
 
-            /* إخفاء حالة الـ API على الهواتف لعدم ازدحام الشاشة */
             .api-status {
                 display: none;
             }
@@ -447,7 +443,6 @@
             .section-title { font-size: 24px; margin-top: 40px; }
         }
 
-        /* تأثير الحركة لزر الهامبرغر عند الفتح (تحويله لعلامة X) */
         .menu-toggle-btn.open span:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
         }
@@ -549,7 +544,7 @@
         <div class="faq-item">
             <div class="faq-question">%70 zaman tasarrufu nasıl sağlanır? <span class="faq-icon">+</span></div>
             <div class="faq-answer">
-                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
+                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşامasına geçirir.</p>
             </div>
         </div>
     </section>
@@ -600,7 +595,7 @@
     </footer>
 
     <script>
-        (Hamburger Menu)
+        // Hamburger Menu
         const menuToggleBtn = document.getElementById('menuToggleBtn');
         const navMenu = document.getElementById('navMenu');
 
@@ -615,12 +610,12 @@
         }
 
         function goToLogin() {
-    window.location.href = "login.html";
-}
+            window.location.href = "/login";
+        }
 
-function goToSignup() {
-    window.location.href = "register.html"; 
-}
+        function goToSignup() {
+            window.location.href = "/signup"; 
+        }
 
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
@@ -638,16 +633,17 @@ function goToSignup() {
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
-            const icon = item.querySelector('.faq-icon');
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
                 faqItems.forEach(i => {
                     i.classList.remove('active');
-                    i.querySelector('.faq-icon').textContent = "+";
+                    const icon = i.querySelector('.faq-icon');
+                    if (icon) icon.textContent = "+";
                 });
                 if (!isActive) {
                     item.classList.add('active');
-                    icon.textContent = "-";
+                    const icon = item.querySelector('.faq-icon');
+                    if (icon) icon.textContent = "-";
                 }
             });
         });
