@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HELP BRO - Akıllı Programcı Asistanı</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700&display=swap');
         
         :root[data-theme="dark"] {
             --bg-color: #0b0f19;
@@ -51,7 +51,7 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap; /* للسماح بالعناصر بالنزول بسلاسة على الهواتف */
+            flex-wrap: wrap;
             gap: 15px;
         }
 
@@ -135,6 +135,7 @@
             text-decoration: none;
             margin-right: 15px;
             font-size: 15px;
+            cursor: pointer;
         }
         .auth-buttons .btn-signup {
             background-color: #3b82f6;
@@ -144,6 +145,7 @@
             border-radius: 6px;
             font-size: 15px;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .hero {
@@ -199,19 +201,20 @@
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            cursor: pointer;
         }
 
         .btn-primary {
             background-color: #3b82f6;
             color: white;
             box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+            border: none;
         }
 
         .btn-secondary {
             background-color: transparent;
             color: #3b82f6;
             border: 2px solid #3b82f6;
-            cursor: pointer;
         }
 
         .section-title {
@@ -358,7 +361,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-       Media Queries 
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -378,13 +380,13 @@
                 gap: 10px;
             }
             .api-status {
-                order: 3; 
+                order: 3;
             }
             .hero {
                 padding: 50px 20px 40px 20px;
             }
             .hero h1 {
-                font-size: 28px; 
+                font-size: 28px;
             }
             .hero p {
                 font-size: 15px;
@@ -394,7 +396,7 @@
                 width: 100%;
             }
             .btn-primary, .btn-secondary {
-                width: 100%; 
+                width: 100%;
             }
             .section-title {
                 font-size: 24px;
@@ -426,8 +428,8 @@
             </div>
             <button class="theme-toggle" id="themeToggle" title="Temayı Değiştir">🌙</button>
             <div class="auth-buttons">
-                <a href="/login" class="btn-login">Login</a>
-                <a href="/signup" class="btn-signup">Sign Up</a>
+                <button onclick="goToLogin()" class="btn-login" style="background:none; border:none;">Login</button>
+                <button onclick="goToSignup()" class="btn-signup">Sign Up</button>
             </div>
         </div>
     </header>
@@ -439,7 +441,7 @@
             <strong>HELP BRO</strong>, yazılım geliştirme süreçlerinde fikirlerinizi saniyeler içinde görsel bir akış diyagramına (Flowchart) dönüştüren yapay zeka destekli bir asistan projesidir.
         </p>
         <div class="hero-buttons">
-            <a href="/signup" class="btn-primary">Get Started</a>
+            <button onclick="goToSignup()" class="btn-primary">Get Started</button>
             <button class="btn-secondary" id="openModalBtn">Nasıl Çalışır?</button>
         </div>
     </section>
@@ -484,13 +486,13 @@
         <div class="faq-item">
             <div class="faq-question">HELP BRO nedir? <span class="faq-icon">+</span></div>
             <div class="faq-answer">
-                <p>HELP BRO, yazılımcıların fikirlerini hızlıca yapılandırılmış algoritmalara ve akış şemalarına dönüştüren yapay zeka tabanlı bir web asistanıdır.</p>
+                <p>HELP BRO, yazılımcıların fikirlerini hızlıca yapılandırılmış algoritmalara bir web asistanıdır.</p>
             </div>
         </div>
         <div class="faq-item">
             <div class="faq-question">%70 zaman tasarrufu nasıl sağlanır? <span class="faq-icon">+</span></div>
             <div class="faq-answer">
-                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim ve algoritmo kurgulama adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
+                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
             </div>
         </div>
     </section>
@@ -541,6 +543,15 @@
     </footer>
 
     <script>
+        // دالات التوجيه البرمجية الصحيحة لتطابق مسارات السيرفر
+        function goToLogin() {
+            window.location.href = "/login";
+        }
+
+        function goToSignup() {
+            window.location.href = "/signup";
+        }
+
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
         themeToggle.addEventListener('click', () => {
