@@ -1,80 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
 
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    <style>
+       
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-.container {
-    background: rgba(255,255,255,0.05);
-    padding: 40px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    width: 320px;
-    text-align: center;
-    color: white;
-}
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-h2 {
-    margin-bottom: 20px;
-}
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-}
+        .back-button:hover {
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, 0.3);
+            background-color: rgba(74, 222, 128, 0.05);
+            transform: translateX(-3px);
+        }
 
-button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #22c55e;
-    color: white;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
-}
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
 
-button:hover {
-    background: #16a34a;
-}
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 380px; 
+            text-align: center;
+            color: white;
+            z-index: 1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
 
-a {
-    color: #60a5fa;
-    text-decoration: none;
-}
-</style>
+        h2 {
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
 
+        input {
+            width: 100%;
+            padding: 13px 16px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            outline: none;
+            background-color: #1e293b;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
+            background-color: #0f172a;
+        }
+
+        .terms-privacy {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #9ca3af;
+            text-align: left;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .terms-privacy input {
+            width: auto;
+            margin: 3px 0 0 0;
+            cursor: pointer;
+            accent-color: #4ade80;
+        }
+
+        .terms-privacy a {
+            color: #4ade80;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #22c55e;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+
+        p {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            .container {
+                margin: 0 20px;
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Create Account</h2>
+    <a href="/" class="back-button">
+        <svg viewBox="0 0 24 24">
+            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+        </svg>
+        Ana Sayfa
+    </a>
 
-    <form action="/register" method="POST">
-    <input  name="username" placeholder="Username" />
-    <input type="email" name="email" placeholder="Email" />
-    <input type="password" name="password" placeholder="Password" />
-    <button type="submit">Register</button>
-    </form>
+    <div class="container">
+        <h2>Create Account</h2>
 
-    <p>Already have an account? <a href="/login.html">Login</a></p>
-</div>
+        <form action="/register" method="POST">
+            <input name="username" placeholder="Username" required autocomplete="username" />
+            <input type="email" name="email" placeholder="Email" required autocomplete="email" />
+            <input type="password" name="password" placeholder="Password" required />
+            
+            <label class="terms-privacy">
+                <input type="checkbox" required> 
+                <span><a href="/terms">Kullanım Şartları</a> ve <a href="/privacy">Gizlilik Politikası</a>'nı kabul ediyorum.</span>
+            </label>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="/login.htm">Login</a></p>
+    </div>
 
 </body>
 </html>
