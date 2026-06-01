@@ -1,79 +1,198 @@
-<div class="login-error-card">
-    <div class="icon">Error!</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Failed</title>
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    <h2>login failed!</h2>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Inter', Arial, sans-serif;
+            
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    <p>
-        This Email are not exist try to sign up
-    </p>
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.06) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    <a href="/register.html" class="register-btn">
-        sigin up
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            color: #ef4444; 
+            border-color: rgba(239, 68, 68, 0.3);
+            background-color: rgba(239, 68, 68, 0.05);
+            transform: translateX(-3px);
+        }
+
+        .back-button svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .login-error-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(239, 68, 68, 0.15); 
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 400px; 
+            text-align: center;
+            color: white;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .error-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border-radius: 50%;
+            color: #ef4444;
+            margin-bottom: 20px;
+        }
+
+        .error-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .login-error-card h2 {
+            color: #ef4444; 
+            margin: 0 0 12px 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .login-error-card p {
+            color: #9ca3af; 
+            line-height: 1.6;
+            margin: 0 0 28px 0;
+            font-size: 15px;
+        }
+
+        .register-btn {
+            display: block;
+            text-decoration: none;
+            background: #ef4444;
+            color: white;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .register-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            .login-error-card {
+                margin: 0 20px;
+                padding: 35px 20px;
+            }
+            .login-error-card h2 {
+                font-size: 21px;
+            }
+            .login-error-card p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-button">
+        <svg viewBox="0 0 24 24">
+            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+        </svg>
+        Ana Sayfa
     </a>
-</div>
 
-<style>
-body{
-    background-color: #373737;
-}
+    <div class="login-error-card">
+        <div class="error-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/>
+            </svg>
+        </div>
 
-.login-error-card {
-    width: 100%;
-    max-width: 420px;
-    margin: 40px auto;
-    padding: 28px;
-    border-radius: 20px;
-    background: #a4a4a4;
-    border: 1px solid #ffcccc;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    animation: fadeIn 0.4s ease;
-}
+        <h2>Login Failed!</h2>
 
-.login-error-card .icon {
-    font-size: 55px;
-    margin-bottom: 12px;
-}
+        <p>This email does not exist. Please check your credentials or sign up below.</p>
 
-.login-error-card h2 {
-    color: #d62828;
-    margin-bottom: 12px;
-    font-size: 26px;
-}
+        <a href="/register.html" class="register-btn">
+            Sign Up
+        </a>
+    </div>
 
-.login-error-card p {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 22px;
-    font-size: 16px;
-}
-
-.register-btn {
-    display: inline-block;
-    text-decoration: none;
-    background: #d62828;
-    color: white;
-    padding: 12px 22px;
-    border-radius: 12px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.register-btn:hover {
-    background: #b71c1c;
-    transform: translateY(-2px);
-}
-
-/* @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-} */
-</style>
+</body>
+</html>
