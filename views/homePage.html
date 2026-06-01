@@ -1,291 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<title>HELP-PRO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELP BRO - Akıllı Programcı Asistanı</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root[data-theme="dark"] {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --hero-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+        }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
+        :root[data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --hero-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
 
-body {
-  color: white;
-  background: linear-gradient(-45deg, #0f172a, #020617, #1e293b, #020617);
-  background-size: 400% 400%;
-  animation: bg 10s ease infinite;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
 
-img{
-  border-radius: 50%;
-}
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: rgba(11, 15, 25, 0.4);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-@keyframes bg {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
-}
+        .logo-link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .logo span.blue { color: #38bdf8; }
+        .logo span.green { color: #4ade80; }
 
-/* ===== Navbar ===== */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 60px;
-}
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 15px;
+        }
+        nav a:hover { color: #3b82f6; }
 
-.logo {
-  font-size: 24px;
-  color: #38bdf8;
-  font-weight: bold;
-}
+        .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
 
-.nav-buttons button {
-  margin-left: 10px;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        .api-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #4ade80;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
 
-.login {
-  background: transparent;
-  border: 1px solid #38bdf8;
-  color: #38bdf8;
-}
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-main);
+        }
 
-.signup {
-  background: #38bdf8;
-  color: black;
-}
+        .auth-buttons .btn-login {
+            color: #3b82f6;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 15px;
+        }
+        .auth-buttons .btn-signup {
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+        }
 
-/* ===== Hero ===== */
-.hero {
-  text-align: center;
-  padding: 120px 20px;
-}
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 80px 20px;
+            background: var(--hero-glow);
+        }
 
-.hero h1 {
-  font-size: 60px;
-}
+        .spinning-gear {
+            font-size: 55px;
+            color: #38bdf8;
+            margin-bottom: 25px;
+            animation: spin 4s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.5));
+        }
 
-.hero p {
-  margin-top: 20px;
-  color: #cbd5f5;
-}
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-.btn {
-  margin-top: 30px;
-  padding: 15px 40px;
-  background: #38bdf8;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        .hero h1 {
+            font-size: 46px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            max-width: 900px;
+        }
+        .hero h1 span.blue { color: #38bdf8; }
+        .hero h1 span.green { color: #4ade80; }
+        .hero h1 span.pink { color: #f472b6; }
 
-.btn:hover {
-  transform: scale(1.05);
-}
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
 
-/* ===== Sections ===== */
-.section {
-  padding: 80px 20px;
-  text-align: center;
-}
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
 
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-  margin-top: 40px;
-}
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
 
-.card {
-  width: 260px;
-  padding: 25px;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
+        .btn-secondary {
+            background-color: transparent;
+            color: #3b82f6;
+            border: 2px solid #3b82f6;
+            text-decoration: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-.card:hover {
-  transform: translateY(-10px);
-}
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 80px;
+            margin-bottom: 40px;
+        }
 
-/* ===== Stats ===== */
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin-top: 40px;
-}
+        .features { padding: 40px 8%; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
 
-.stat {
-  font-size: 28px;
-}
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+        }
 
-/* ===== Steps ===== */
-.steps {
-  max-width: 600px;
-  margin: auto;
-  text-align: left;
-  margin-top: 40px;
-}
+        .card h3 { font-size: 20px; margin-bottom: 15px; }
+        .card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 
-.step {
-  margin-bottom: 20px;
-}
+        .stats {
+            background-color: var(--card-bg);
+            padding: 50px 8%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
 
-/* ===== Testimonials ===== */
-.testimonial {
-  max-width: 500px;
-  margin: 20px auto;
-  opacity: 0.8;
-}
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-/* ===== Scroll Animation ===== */
-.hidden {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.6s;
-}
+        .stat-item h2 { font-size: 42px; color: #3b82f6; margin-bottom: 10px; }
+        .stat-item p { color: var(--text-muted); }
 
-.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+        .faq-section {
+            padding: 60px 20%;
+        }
+        .faq-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 20px 20px 20px;
+        }
 
-/* ===== Footer ===== */
-footer {
-  text-align: center;
-  padding: 30px;
-  opacity: 0.6;
-}
-</style>
+        .team { padding: 60px 8%; }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .team-card .role {
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: 700;
+            background: rgba(59, 130, 246, 0.1);
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2000; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px; border-radius: 16px; max-width: 500px;
+            text-align: center; position: relative;
+        }
+        .close-modal {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 24px; cursor: pointer; color: var(--text-muted);
+        }
+        .modal-content h3 { margin-bottom: 15px; color: #3b82f6; }
+        .modal-content p { color: var(--text-muted); line-height: 1.6; }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
-  <div class="logo">HELP-PRO</div>
-  <div class="nav-buttons">
-  <button class="login" onclick="goToLogin()">Login</button>
-  <button class="signup" onclick="goToRegister()">Sign Up</button>
-</div>
-</nav>
+    <header>
+        <a href="#about" class="logo-link">
+            <div class="logo"><span class="blue">HELP</span><span class="green">BRO</span></div>
+        </a>
+        
+        <nav>
+            <a href="#about">Proje Hakkında</a>
+            <a href="#features">Teknolojiler</a>
+            <a href="#faq">Sıkça Sorulanlar</a>
+            <a href="#team">Proje Ekibi</a>
+        </nav>
+        <div class="right-menu">
+            <div class="api-status">
+                <div class="api-dot"></div>
+                <span>Gemini API: Connected</span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Temayı Değiştir">🌙</button>
+            <div class="auth-buttons">
+                <a href="/login" class="btn-login">Login</a>
+                <a href="/signup" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
 
-<section class="hero">
-  <img src="/image" width="100px" height="100px">
-  <h1><span class="b1">Build</span> <span class="b2">Projects</span> <span class="b3">Faster</span></h1>
-  <p>Stop wasting time on setup. Start building real things.</p>
-  <button class="btn" onclick="goToRegister()">Get Started </button>
-</section>
+    <section class="hero" id="about">
+        <div class="spinning-gear">⚙️</div>
+        <h1><span class="blue">Yapay Zeka</span> ile Projeleri Daha <span class="green">Hızlı</span> İnşa Edin <span class="pink">AI</span></h1>
+        <p>
+            <strong>HELP BRO</strong>, yazılım geliştirme süreçlerinde fikirlerinizi saniyeler içinde görsel bir akış diyagramına (Flowchart) dönüştüren yapay zeka destekli bir asistan projesidir.
+        </p>
+        <div class="hero-buttons">
+            <a href="/signup" class="btn-primary">Get Started</a>
+            <button class="btn-secondary" id="openModalBtn">Nasıl Çalışır?</button>
+        </div>
+    </section>
 
-<section class="section hidden">
-  <h2>Features</h2>
-  <div class="cards">
-    <div class="card">⚡ Instant Setup</div>
-    <div class="card">🧠 Smart Structure</div>
-    <div class="card">🔧 Flexible Tools</div>
-  </div>
-</section>
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h2 id="animatedCounter">%0</h2>
+                <p>Planlama Aşamasında Zaman Tasarrufu</p>
+            </div>
+            <div class="stat-item">
+                <h2>Gemini API</h2>
+                <p>Akıllı Mantık Motoru</p>
+            </div>
+            <div class="stat-item">
+                <h2>Mermaid.js</h2>
+                <p>Dinamik Akış Diyagramı</p>
+            </div>
+        </div>
+    </section>
 
-<section class="section hidden">
-  <h2>Trusted by Developers</h2>
-  <div class="stats">
-    <div class="stat">+10K Users</div>
-    <div class="stat">+50K Projects</div>
-    <div class="stat">99% Satisfaction</div>
-  </div>
-</section>
+    <section class="features" id="features">
+        <h2 class="section-title">Teknoloji Yığını ve Özellikler</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🧠 Akıllı Algoritma Planlama</h3>
+                <p>Google AI Studio (Gemini API) entegrasyonu sayesinde, kullanıcılardan gelen metin analiz edilerek teknik bir akış planı hazırlanır.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Mermaid.js Entegrasyonu</h3>
+                <p>Yapay zekadan gelen veriler teknik Mermaid.js formatına çevrilerek anında dinamik ve görsel flowchart'lar oluşturulur.</p>
+            </div>
+            <div class="card">
+                <h3>💻 Güçlü Backend Altyapısı</h3>
+                <p>Arka planda Node.js mantık katmanı çalışırken, kullanıcı ve proje verileri MongoDB veritabanı altyapısında güvenle saklanır.</p>
+            </div>
+        </div>
+    </section>
 
-<section class="section hidden">
-  <h2>How it works</h2>
-  <div class="steps">
-    <div class="step">1. Choose project type</div>
-    <div class="step">2. Customize structure</div>
-    <div class="step">3. Download & start coding</div>
-  </div>
-</section>
+    <section class="faq-section" id="faq">
+        <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+        <div class="faq-item">
+            <div class="faq-question">HELP BRO nedir? <span class="faq-icon">+</span></div>
+            <div class="faq-answer">
+                <p>HELP BRO, yazılımcıların fikirlerini hızlıca yapılandırılmış algoritmalara ve akış şemalarına dönüştüren yapay zeka tabanlı bir web asistanıdır.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">%70 zaman tasarrufu nasıl sağlanır? <span class="faq-icon">+</span></div>
+            <div class="faq-answer">
+                <p>Yazılım projelerinin başlangıcındaki manuel mimari çizim ve algoritma kurgulama adımlarını otomatikleştirerek geliştiriciyi doğrudan kodlama aşamasına geçirir.</p>
+            </div>
+        </div>
+    </section>
 
-<section class="section hidden">
-  <h2>What Developers Say</h2>
-  <div class="testimonial">"This saved me hours every week!"</div>
-  <div class="testimonial">"Finally a tool that makes sense."</div>
-</section>
+    <section class="team" id="team">
+        <h2 class="section-title">Proje Ekibi ve Roller (Agile & Scrum)</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <span class="role">Product Owner</span>
+                <h4>Eslam Alhajji M.Bathch</h4>
+            </div>
+            <div class="team-card">
+                <span class="role">Scrum Master</span>
+                <h4>Ali Alzuabidi</h4>
+            </div>
+            <div class="team-card">
+                <span class="role">Software Developer</span>
+                <h4>Ahmed Idris</h4>
+            </div>
+            <div class="team-card">
+                <span class="role">Software Developer</span>
+                <h4>Fatima Sams Aldien</h4>
+            </div>
+            <div class="team-card">
+                <span class="role">Software Developer</span>
+                <h4>Mohamed Al Kadour</h4>
+            </div>
+            <div class="team-card">
+                <span class="role">Software Developer</span>
+                <h4>Youmna Hawaj</h4>
+            </div>
+        </div>
+    </section>
 
-<section class="section hidden">
-  <h2>Start Now</h2>
-  <button class="btn">Launch Project</button>
-</section>
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <h3>HELP BRO Nasıl Çalışır?</h3>
+            <p style="margin-bottom: 15px; margin-top: 15px;">1. Projenizin fikir veya akışını metin olarak girin.</p>
+            <p style="margin-bottom: 15px;">2. Gemini API mimariyi ve mantığı anında analiz eder.</p>
+            <p>3. Mermaid.js motoru analizi canlı bir akış diyagramına dönüştürür.</p>
+        </div>
+    </div>
 
-<footer>
-  © 2026 HELP-PRO
-</footer>
+    <footer>
+        <p>İSTANBUL TOPKAPI ÜNİVERSİTESİ | 2026</p>
+        <p style="margin-top: 5px; font-size: 12px;">Danışman: Dr. Öğr. Üyesi Yavuz İnce</p>
+    </footer>
 
-<script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-    }
-  });
-});
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeToggle.textContent = '☀️';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '🌙';
+            }
+        });
 
-document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const icon = item.querySelector('.faq-icon');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.faq-icon').textContent = "+";
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    icon.textContent = "-";
+                }
+            });
+        });
 
-//login and signup functions
-function goToLogin() {
-  window.location.href = "login.html";
-}
+        const modal = document.getElementById('infoModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        openModalBtn.addEventListener('click', () => modal.classList.add('active'));
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        window.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
 
-function goToRegister() {
-  window.location.href = "register.html";
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  gsap.from("h1", {
-    opacity: 0,
-    y: -100,
-    duration: 4,
-  });
-
-  const tl = gsap.timeline({repeat:-1});
-
-  tl.to(".b1", {
-    opacity:0.8,
-    duration: 2,
-    color: "DeepSkyBlue",
-    yoyo: true,
-  })
-
-  tl.to(".b2", {
-    duration: 2,
-    opacity:0.8,
-    color: "lime",
-  })
-
-  tl.to(".b3", {
-    opacity:0.8,
-    duration: 3,
-    color: "red",
-  });
-
-  gsap.to("img",{
-    rotate:180,
-    duration:2,
-    repeat:-1,
-  });
-
-});
-</script>
+        const counterElement = document.getElementById('animatedCounter');
+        let count = 0;
+        const target = 70;
+        
+        function runCounter() {
+            if (count < target) {
+                count += 2;
+                counterElement.textContent = `%${count}`;
+                setTimeout(runCounter, 30);
+            } else {
+                counterElement.textContent = `%${target}`;
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(runCounter, 1000);
+        });
+    </script>
 </body>
 </html>
