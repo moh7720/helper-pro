@@ -1,43 +1,27 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HELP BRO - Login</title>
+    <title>Login</title>
+
     <style>
+        /* إضافة خط Inter الاحترافي للمشروع */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
 
         body {
-            background-color: #0b0f19;
-            color: #f3f4f6;
+            margin: 0;
+            height: 100vh;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             position: relative;
             overflow: hidden;
         }
 
-        body::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
+        /* ===== زر العودة للخلف (Back Button) الأنيق ===== */
         .back-button {
             position: absolute;
             top: 30px;
@@ -52,14 +36,14 @@
             padding: 8px 16px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: rgba(17, 24, 39, 0.5);
+            background-color: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(5px);
             transition: all 0.2s ease;
             z-index: 10;
         }
 
         .back-button:hover {
-            color: #3b82f6;
+            color: #3b82f6; /* توهج أزرق متناسق مع زر الـ Login */
             border-color: rgba(59, 130, 246, 0.3);
             background-color: rgba(59, 130, 246, 0.05);
             transform: translateX(-3px);
@@ -71,54 +55,52 @@
             fill: currentColor;
         }
 
-        .login-container {
-            background-color: #111827;
+        /* ===== كرت تسجيل الدخول المطور والمقاوم للموبايل ===== */
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
             width: 100%;
-            max-width: 420px;
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            max-width: 380px; /* عرض مرن متوافق مع شاشات الهواتف */
             text-align: center;
+            color: white;
             z-index: 1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
-        .login-container h2 {
-            font-size: 28px;
-            font-weight: 700;
+        h2 {
             margin-bottom: 25px;
-            letter-spacing: -0.5px;
+            font-weight: 700;
         }
 
-        .input-group {
-            margin-bottom: 18px;
-            text-align: left;
-            position: relative;
-        }
-
-        .input-group input {
+        input {
             width: 100%;
             padding: 13px 16px;
-            background-color: #1f2937;
+            margin: 10px 0;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            color: #ffffff;
-            font-size: 14px;
             outline: none;
+            background-color: #1e293b;
+            color: white;
+            font-size: 14px;
             transition: all 0.2s ease;
         }
 
-        .input-group input:focus {
+        /* تأثير توهج أزرق ناعم عند الكتابة */
+        input:focus {
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-            background-color: #111827;
+            background-color: #0f172a;
         }
 
+        /* خيارات إضافية لتوازن التصميم واحترافيته */
         .form-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 22px;
+            margin: 15px 0;
             font-size: 13px;
             color: #9ca3af;
         }
@@ -131,59 +113,61 @@
         }
 
         .remember-me input {
+            width: auto;
+            margin: 0;
             cursor: pointer;
             accent-color: #3b82f6;
         }
 
         .forgot-password {
             color: #3b82f6;
-            text-decoration: none;
         }
         .forgot-password:hover {
             text-decoration: underline;
         }
 
-        .btn-login {
+        button {
             width: 100%;
             padding: 13px;
-            background-color: #3b82f6;
-            color: #ffffff;
             border: none;
             border-radius: 8px;
+            background: #3b82f6; /* اللون الأزرق الأساسي لزر الدخول */
+            color: white;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 10px;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
             transition: all 0.2s ease;
         }
 
-        .btn-login:hover {
-            background-color: #2563eb;
+        button:hover {
+            background: #2563eb;
             transform: translateY(-1px);
             box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
         }
-
-        .btn-login:active {
+        
+        button:active {
             transform: translateY(0);
         }
 
-        .signup-text {
+        p {
             margin-top: 25px;
             font-size: 14px;
             color: #9ca3af;
         }
 
-        .signup-text a {
-            color: #3b82f6;
+        a {
+            color: #60a5fa;
             text-decoration: none;
             font-weight: 600;
-            margin-left: 4px;
         }
 
-        .signup-text a:hover {
+        a:hover {
             text-decoration: underline;
         }
 
+        /* ===== توافق شاشات الهاتف الذكي ===== */
         @media (max-width: 640px) {
             .back-button {
                 top: 20px;
@@ -191,7 +175,7 @@
                 padding: 6px 12px;
                 font-size: 13px;
             }
-            .login-container {
+            .container {
                 margin: 0 20px;
                 padding: 30px 20px;
             }
@@ -207,18 +191,13 @@
         Ana Sayfa
     </a>
 
-    <div class="login-container">
+    <div class="container">
         <h2>Login</h2>
-        <form action="/api/login" method="POST">
-            
-            <div class="input-group">
-                <input type="email" name="email" placeholder="Email" required autocomplete="email">
-            </div>
-            
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
 
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Email" required autocomplete="email" />
+            <input type="password" name="password" placeholder="Password" required />
+            
             <div class="form-options">
                 <label class="remember-me">
                     <input type="checkbox" name="remember"> Beni Unutma
@@ -226,12 +205,10 @@
                 <a href="/forgot-password" class="forgot-password">Şifremi Unuttum</a>
             </div>
 
-            <button type="submit" class="btn-login">Login</button>
+            <button type="submit">Login</button>
         </form>
 
-        <p class="signup-text">
-            Don't have an account? <a href="/signup">Register</a>
-        </p>
+        <p>Don't have an account? <a href="/register.html">Register</a></p>
     </div>
 
 </body>
