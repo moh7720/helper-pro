@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #0b1220;
+            color: #e5eefc;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            padding: 18px 24px;
+            border-bottom: 1px solid #243247;
+            background: #111827;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .topbar p {
+            margin: 6px 0 0;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .back-button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .content {
+            flex: 1;
+            padding: 24px;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 18px;
+        }
+
+        .summary {
+            color: #cbd5e1;
+            line-height: 1.6;
+            max-width: 980px;
+        }
+
+        .chart-canvas {
+            min-height: 520px;
+            overflow: auto;
+            border: 1px solid #243247;
+            border-radius: 8px;
+            padding: 18px;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .chart-canvas svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .error {
+            color: #fca5a5;
+        }
+
+        @media (max-width: 720px) {
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .content {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="topbar">
+            <div>
+                <h1 id="title">Project Chart</h1>
+                <p id="meta">Loading chart...</p>
+            </div>
+            <button class="back-button" type="button" id="backButton">Back to Chat</button>
+        </header>
+        <section class="content">
+            <div class="summary" id="summary"></div>
+            <div class="chart-canvas" id="chartCanvas">Loading...</div>
+        </section>
+    </main>
+
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: "default" });
+
+        const params = new URLSearchParams(window.location.search);
+        const chatId = params.get("chatId");
+        const title = document.getElementById("title");
+        const meta = document.getElementById("meta");
+        const summary = document.getElementById("summary");
+        const chartCanvas = document.getElementById("chartCanvas");
+        const backButton = document.getElementById("backButton");
+
+        backButton.addEventListener("click", () => {
+            window.location.href = "/chat";
+        });
+
+        async function loadChart() {
+            if (!chatId) {
+                throw new Error("Missing chatId");
+            }
+
+            const response = await fetch("/api/charts/" + encodeURIComponent(chatId));
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                throw new Error(data.error || "Could not load chart");
+            }
+
+            title.textContent = data.title || "Project Chart";
+            meta.textContent = data.generatedAt
+                ? "Generated at " + new Date(data.generatedAt).toLocaleString()
+                : "Generated chart";
+            summary.textContent = data.summary || "";
+
+            const renderId = "saved-chart-" + Date.now();
+            const rendered = await mermaid.render(renderId, data.mermaid);
+            chartCanvas.innerHTML = rendered.svg;
+        }
+
+        loadChart().catch((err) => {
+            meta.textContent = "Chart error";
+            chartCanvas.classList.add("error");
+            chartCanvas.textContent = err.message;
+        });
+    </script>
+</body>
+</html>
