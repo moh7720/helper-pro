@@ -331,7 +331,7 @@
                 messages: [
                     {
                         role: "assistant",
-                        content: "Merhaba. Ben HELP BRO proje asistanıyım. MVP, backlog, Gemini entegrasyonu, chat arayuzu ve Mermaid.js flowchart ozelligi hakkinda yardimci olabilirim."
+                        content: "Merhaba! HELP BRO asistanına hoş geldiniz. Projeleriniz, iş akışınız veya veri analizleriniz hakkında size nasıl yardımcı olabilirim?"
                     }
                 ]
             };
@@ -559,14 +559,14 @@
             return React.createElement("main", { className: "chat-app" },
                 React.createElement("aside", { className: "sidebar" },
                     React.createElement("div", { className: "brand" },
-                        React.createElement("h1", null, "HELP-PRO Chat"),
-                        React.createElement("p", null, "React ile mesajlasma ekrani")
-                    ),
+                     React.createElement("h1", null, "HELP BRO Workspace"),
+                     React.createElement("p", null, "Proje ve İlerleme Yönetimi Merkezi")
+),
                     React.createElement("button", {
                         className: "new-chat",
                         onClick: addChat,
                         disabled: isLoading || isLoadingChats
-                    }, "New Chat"),
+                    }, "Yeni Sohbet"),
                     React.createElement("div", { className: "chat-tabs" },
                         chats.map((chat) =>
                             React.createElement("button", {
@@ -594,7 +594,7 @@
                                 type: "button",
                                 onClick: generateFlowchart,
                                 disabled: isLoadingChats || isLoading || isChartLoading || !activeChat.id || activeChat.messages.length < 2
-                            }, isChartLoading ? "Generating" : "Generate Chart"),
+                            }, isChartLoading ? "Oluşturuluyor" : "Chart Oluştur"),
                             error ? React.createElement("div", { className: "status" }, error) : null
                         )
                     ),
@@ -629,7 +629,7 @@
                             disabled: isLoading || isLoadingChats
                         }),
                         React.createElement("button", { type: "submit", disabled: isLoading || isLoadingChats || !activeChat.id || input.trim() === "" },
-                            isLoading ? "Sending" : "Send"
+                            isLoading ? "Gönderiliyor" : "Gönder"
                         )
                     )
                 )
